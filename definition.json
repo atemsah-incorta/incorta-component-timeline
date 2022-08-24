@@ -1,0 +1,41 @@
+{
+  "icon": "./assets/icon.svg",
+  "name": "Timeline",
+  "hint": "Timeline Chart Visualization",
+  "options": {
+    "individualFilter": true
+  },
+  "settings": [
+    {
+      "name": "Visualization",
+      "settings": [
+        {
+          "name": "Show as Waterfall",
+          "key": "isWaterfall",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ]
+    }
+  ],
+  "bindingsTrays": [
+    {
+      "key": "tray-start",
+      "name": "Start",
+      "queryRole": "measure",
+      "minCount": 1
+    },
+    {
+      "key": "tray-end",
+      "name": "End",
+      "queryRole": "measure",
+      "minCount": 1
+    },
+    {
+      "key": "tray-value",
+      "name": "Value",
+      "queryRole": "measure",
+      "minCount": 1
+    }
+  ]
+}
