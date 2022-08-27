@@ -12,12 +12,16 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  TimeScale,
   BarElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+
+import { format } from 'date-fns'
+import 'chartjs-adapter-date-fns';
 
 import { DataSetEntry, DataSetMapper, GroupedTimelineMapper, WaterfallTimelineMapper } from './DataSetMapper'
 
@@ -31,6 +35,7 @@ interface Props {
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  TimeScale,
   BarElement,
   Title,
   Tooltip,
@@ -67,18 +72,26 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
         stacked: true
       },
       x: {
-        min: Math.min(...raw.map(e => e.start))
+        min: Math.min(...raw.map(e => e.start)),
+        type: 'time' as const,
+        parsing: false,
+        time: {
+          unit: 'day' as const,
+          displayFormats: { day: 'yyyy-MM-dd' }
+        }
       }
     },
     plugins: {
       legend: { display: false },
       tooltip: {
-        filter: (item: any) => item.raw
+        callbacks: {
+          label: (ctx: any): string => {
+            const start = format(new Date(ctx.parsed._custom.start), 'yyyy-MM-dd HH:mm:ss')
+            const end = format(new Date(ctx.parsed._custom.end), 'yyyy-MM-dd HH:mm:ss')
+            return start + " to " + end
+          }
+        }
       }
-    },
-    interaction: {
-      mode: 'index' as const,
-      axis: 'y' as const
     },
     animation: { duration: 0 }
   }
