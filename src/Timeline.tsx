@@ -114,7 +114,9 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
         }
       }
     },
-    animation: { duration: 0 }
+    animation: { duration: 0 },
+    responsive: true,
+    maintainAspectRatio: false
   }
 
   return <Bar data={chartData} options={chartOptions} />;
