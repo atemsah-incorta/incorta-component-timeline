@@ -16,7 +16,7 @@
           "defaultValue": false
         },
         {
-          "name": "Scale Unit",
+          "name": "Time Scale Unit",
           "key": "unit",
           "type": "dropdown",
           "defaultValue": "default",
@@ -32,6 +32,11 @@
             { "key": "quarter", "label": "Quarter" },
             { "key": "year", "label": "Year" }
           ]
+        },
+        {
+          "name": "Time Scale Format",
+          "key": "format",
+          "type": "text"
         }
       ]
     }
@@ -42,14 +47,30 @@
       "name": "Start",
       "queryRole": "measure",
       "minCount": 1,
-      "maxCount": 1
+      "maxCount": 1,
+      "settings": [
+        {
+          "name": "Format",
+          "settings": [
+            { "key": "format", "name": "Format", "type": "date-format" }
+          ]
+        }
+      ]
     },
     {
       "key": "tray-end",
       "name": "End",
       "queryRole": "measure",
       "minCount": 1,
-      "maxCount": 1
+      "maxCount": 1,
+      "settings": [
+        {
+          "name": "Format",
+          "settings": [
+            { "key": "format", "name": "Format", "type": "date-format" }
+          ]
+        }
+      ]
     },
     {
       "key": "tray-label",
