@@ -2,6 +2,7 @@ export interface DataSetEntry {
     start: number;
     end: number;
     label: string;
+    tooltip?: string;
 }
 
 export interface TimelineDataSet {
@@ -33,7 +34,7 @@ export class GroupedTimelineMapper extends DataSetMapper {
 
         const dataSets = [{
             label: '',
-            data: this.data.map(e => { return { x: [e.start, e.end], y: e.label } }),
+            data: this.data.map(e => { return { x: [e.start, e.end], y: e.label, tooltip: e.tooltip } }),
             backgroundColor: this.data.map(e => colors[e.label]),
             minBarLength: 2
         }]
@@ -54,7 +55,7 @@ export class WaterfallTimelineMapper extends DataSetMapper {
 
         const dataSets = [{
             label: '',
-            data: this.data.map(e => [e.start, e.end]),
+            data: this.data.map(e => { return { x: [e.start, e.end], y: e.label, tooltip: e.tooltip } }),
             backgroundColor: this.data.map(e => colors[e.label]),
             minBarLength: 2
         }]

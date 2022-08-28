@@ -23,19 +23,27 @@
       "key": "tray-start",
       "name": "Start",
       "queryRole": "measure",
-      "minCount": 1
+      "minCount": 1,
+      "maxCount": 1
     },
     {
       "key": "tray-end",
       "name": "End",
       "queryRole": "measure",
-      "minCount": 1
+      "minCount": 1,
+      "maxCount": 1
     },
     {
       "key": "tray-label",
       "name": "Label",
       "queryRole": "measure",
-      "minCount": 1
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "key": "tray-tooltip",
+      "name": "Tooltip",
+      "queryRole": "measure"
     }
   ]
 }

@@ -42,6 +42,12 @@ ChartJS.register(
   Legend
 )
 
+const generateDefaultTooltip = (entry: any[]): string => {
+  const start = format(new Date(entry[0].value), 'yyyy-MM-dd HH:mm:ss')
+  const end = format(new Date(entry[0].value), 'yyyy-MM-dd HH:mm:ss')
+  return start + " to " + end
+}
+
 const Timeline = ({ context, prompts, data, drillDown }: Props) => {
   
   const pallete = context.app.color_palette
@@ -51,7 +57,8 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
     return {
       start: new Date(entry[0].value).getTime(),
       end: new Date(entry[1].value).getTime(),
-      label: entry[2].value
+      label: entry[2].value,
+      tooltip: entry[3]?.value ? entry[3].value : generateDefaultTooltip(entry)
     }
   })
   .filter(o => o.start < o.end) //Remove weird cases where start > end
@@ -85,11 +92,7 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
       legend: { display: false },
       tooltip: {
         callbacks: {
-          label: (ctx: any): string => {
-            const start = format(new Date(ctx.parsed._custom.start), 'yyyy-MM-dd HH:mm:ss')
-            const end = format(new Date(ctx.parsed._custom.end), 'yyyy-MM-dd HH:mm:ss')
-            return start + " to " + end
-          }
+          label: (ctx: any): string => { return ctx.raw.tooltip }
         }
       }
     },
