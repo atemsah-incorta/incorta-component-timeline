@@ -14,6 +14,24 @@
           "key": "isWaterfall",
           "type": "boolean",
           "defaultValue": false
+        },
+        {
+          "name": "Scale Unit",
+          "key": "unit",
+          "type": "dropdown",
+          "defaultValue": "default",
+          "options": [
+            { "key": "default", "label": "Default" },
+            { "key": "millisecond", "label": "Millisecond" },
+            { "key": "second", "label": "Second" },
+            { "key": "minute", "label": "Minute" },
+            { "key": "hour", "label": "Hour" },
+            { "key": "day", "label": "Day" },
+            { "key": "week", "label": "Week" },
+            { "key": "month", "label": "Month" },
+            { "key": "quarter", "label": "Quarter" },
+            { "key": "year", "label": "Year" }
+          ]
         }
       ]
     }

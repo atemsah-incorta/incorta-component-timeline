@@ -83,8 +83,7 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
         type: 'time' as const,
         parsing: false,
         time: {
-          unit: 'day' as const,
-          displayFormats: { day: 'yyyy-MM-dd' }
+          unit: context.component.settings?.unit === "default" ? false : context.component.settings?.unit
         }
       }
     },
