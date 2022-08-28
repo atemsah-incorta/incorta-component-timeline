@@ -1,7 +1,7 @@
 export interface DataSetEntry {
     start: number;
     end: number;
-    value: string;
+    label: string;
 }
 
 export interface TimelineDataSet {
@@ -24,7 +24,7 @@ export abstract class DataSetMapper {
 export class GroupedTimelineMapper extends DataSetMapper {
     generate(): TimelineDataSet {
         // Getting unique labels
-        const labels = this.data.map(e => e.value).filter((v, i, a) => a.indexOf(v) === i)
+        const labels = this.data.map(e => e.label).filter((v, i, a) => a.indexOf(v) === i)
 
         const colors = {}
         for (var i = 0; i < labels.length; ++i) {
@@ -33,8 +33,8 @@ export class GroupedTimelineMapper extends DataSetMapper {
 
         const dataSets = [{
             label: '',
-            data: this.data.map(e => { return { x: [e.start, e.end], y: e.value } }),
-            backgroundColor: this.data.map(e => colors[e.value]),
+            data: this.data.map(e => { return { x: [e.start, e.end], y: e.label } }),
+            backgroundColor: this.data.map(e => colors[e.label]),
             minBarLength: 2
         }]
 
@@ -45,7 +45,7 @@ export class GroupedTimelineMapper extends DataSetMapper {
 export class WaterfallTimelineMapper extends DataSetMapper {
     generate(): TimelineDataSet {
         // Getting unique labels
-        const labels = this.data.map(e => e.value).filter((v, i, a) => a.indexOf(v) === i)
+        const labels = this.data.map(e => e.label).filter((v, i, a) => a.indexOf(v) === i)
 
         const colors = {}
         for (var i = 0; i < labels.length; ++i) {
@@ -55,10 +55,10 @@ export class WaterfallTimelineMapper extends DataSetMapper {
         const dataSets = [{
             label: '',
             data: this.data.map(e => [e.start, e.end]),
-            backgroundColor: this.data.map(e => colors[e.value]),
+            backgroundColor: this.data.map(e => colors[e.label]),
             minBarLength: 2
         }]
 
-        return { labels: this.data.map(e => e.value), dataSets: dataSets }
+        return { labels: this.data.map(e => e.label), dataSets: dataSets }
     }
 }

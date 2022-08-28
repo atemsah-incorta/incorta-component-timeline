@@ -32,8 +32,8 @@
       "minCount": 1
     },
     {
-      "key": "tray-value",
-      "name": "Value",
+      "key": "tray-label",
+      "name": "Label",
       "queryRole": "measure",
       "minCount": 1
     }

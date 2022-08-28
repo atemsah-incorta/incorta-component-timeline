@@ -49,9 +49,9 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
   // Mapping the query response to a more usable state 
   const raw: DataSetEntry[] = data.data.map(entry => {
     return {
-      "start": new Date(entry[0].value).getTime(),
-      "end": new Date(entry[1].value).getTime(),
-      "value": entry[2].value,
+      start: new Date(entry[0].value).getTime(),
+      end: new Date(entry[1].value).getTime(),
+      label: entry[2].value
     }
   })
   .filter(o => o.start < o.end) //Remove weird cases where start > end
