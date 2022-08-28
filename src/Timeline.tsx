@@ -58,7 +58,7 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
       start: new Date(entry[0].value).getTime(),
       end: new Date(entry[1].value).getTime(),
       label: entry[2].value,
-      tooltip: entry[3]?.value ? entry[3].value : `${entry[0].formatted} → ${entry[1].formatted}`
+      tooltip: entry.length > 3 ? entry.slice(3).map(e => e.value) : [`${entry[0].formatted} → ${entry[1].formatted}`]
     }
   })
   .filter(o => o.start < o.end) //Remove weird cases where start > end

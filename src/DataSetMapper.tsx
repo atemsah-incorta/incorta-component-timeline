@@ -2,7 +2,7 @@ export interface DataSetEntry {
     start: number;
     end: number;
     label: string;
-    tooltip?: string;
+    tooltip?: string[];
 }
 
 export interface TimelineDataSet {
