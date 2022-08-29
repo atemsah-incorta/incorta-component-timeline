@@ -22,6 +22,15 @@ export abstract class DataSetMapper {
     abstract generate(): TimelineDataSet
 }
 
+export function getMapper(mode: string, data: DataSetEntry[], colors: string[]): DataSetMapper {
+    const mapper = {
+        "gantt": () => { return new GanttTimelineMapper(data, colors) },
+        "default": () => { return new GroupedTimelineMapper(data, colors) }
+    }
+
+    return (mapper[mode] || mapper["default"])();
+}
+
 export class GroupedTimelineMapper extends DataSetMapper {
     generate(): TimelineDataSet {
         // Getting unique labels
@@ -43,7 +52,7 @@ export class GroupedTimelineMapper extends DataSetMapper {
     }
 }
 
-export class WaterfallTimelineMapper extends DataSetMapper {
+export class GanttTimelineMapper extends DataSetMapper {
     generate(): TimelineDataSet {
         // Getting unique labels
         const labels = this.data.map(e => e.label).filter((v, i, a) => a.indexOf(v) === i)

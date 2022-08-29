@@ -1,7 +1,7 @@
 {
   "icon": "./assets/icon.svg",
   "name": "Timeline",
-  "hint": "Timeline Chart Visualization",
+  "hint": "Drag any 2 time based fields to the Start/End trays and a field marking them to the label tray then enjoy visualizing your data on the timeline as floating bars",
   "options": {
     "individualFilter": true
   },
@@ -10,10 +10,14 @@
       "name": "Visualization",
       "settings": [
         {
-          "name": "Show as Waterfall",
-          "key": "isWaterfall",
-          "type": "boolean",
-          "defaultValue": false
+          "name": "Mode",
+          "key": "mode",
+          "type": "dropdown",
+          "defaultValue": "default",
+          "options": [
+            { "key": "default", "label": "Default" },
+            { "key": "gantt", "label": "Gantt"}
+          ]
         },
         {
           "name": "Time Scale Unit",

@@ -23,7 +23,7 @@ import { Bar } from 'react-chartjs-2';
 import { format } from 'date-fns'
 import 'chartjs-adapter-date-fns';
 
-import { DataSetEntry, DataSetMapper, GroupedTimelineMapper, WaterfallTimelineMapper } from './DataSetMapper'
+import { DataSetEntry, DataSetMapper, getMapper } from './DataSetMapper'
 
 interface Props {
   context: Context<TContext>;
@@ -64,7 +64,7 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
   .filter(o => o.start < o.end) //Remove weird cases where start > end
   .sort((a, b) => a.start - b.start) //Ensure chronological order by sorting on start
 
-  const mapper: DataSetMapper = settings?.isWaterfall ? new WaterfallTimelineMapper(raw, pallete) : new GroupedTimelineMapper(raw, pallete)
+  const mapper: DataSetMapper = getMapper(settings?.mode, raw, pallete);
   const mappedSet = mapper.generate()
 
   const chartData = {
