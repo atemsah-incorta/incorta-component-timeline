@@ -23,6 +23,7 @@ import { Bar } from 'react-chartjs-2';
 import { format } from 'date-fns'
 import 'chartjs-adapter-date-fns';
 
+import { ErrorNode, isValidTimeScale } from './Error'
 import { DataSetEntry, DataSetMapper, getMapper } from './DataSetMapper'
 
 interface Props {
@@ -76,7 +77,14 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
   .filter(o => o.start < o.end) //Remove weird cases where start > end
   .sort((a, b) => a.start - b.start) //Ensure chronological order by sorting on start
 
-  const mapper: DataSetMapper = getMapper(settings?.mode, raw, pallete);
+  const minStep = Math.min(...raw.map(e => e.start))
+  const maxStep = Math.max(...raw.map(e => e.end))
+
+  if(!isValidTimeScale(maxStep, minStep, settings?.unit)) {
+    return ErrorNode(`Invalid Time Scale Unit! Number of steps is larger than 100,000 ${settings?.unit}(s)`)
+  }
+
+  const mapper: DataSetMapper = getMapper(settings?.mode, raw, pallete)
   const mappedSet = mapper.generate()
 
   const chartData = {
