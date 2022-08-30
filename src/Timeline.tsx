@@ -43,9 +43,6 @@ ChartJS.register(
 )
 
 const Timeline = ({ context, prompts, data, drillDown }: Props) => {
-
-  console.log(context)
-  console.log(data)
   
   const pallete = context.app.color_palette
   const settings = context.component.settings
@@ -67,11 +64,11 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
     const bindings = context.component.bindings || {}
 
     // Optional color tray
-    if (bindings['tray-color'].length > 0) { mapped.color = entry[3].value }
+    if (bindings['tray-color']?.length > 0) { mapped.color = entry[3].value }
 
     //Optional tooltip tray
-    if (bindings['tray-tooltip'].length > 0) {
-      mapped.tooltip?.push(...entry.slice(3 + bindings['tray-color'].length).map(e => e.value))
+    if (bindings['tray-tooltip']?.length > 0) {
+      mapped.tooltip?.push(...entry.slice(3 + bindings['tray-color']?.length).map(e => e.value))
     }
 
     return mapped;
