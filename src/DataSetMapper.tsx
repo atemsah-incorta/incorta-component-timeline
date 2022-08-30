@@ -2,11 +2,13 @@ export interface DataSetEntry {
     start: number;
     end: number;
     label: string;
+    color?: string;
     tooltip?: string[];
 }
 
 export interface TimelineDataSet {
     labels: string[];
+    legends: { label: string; color: string; }[];
     dataSets: { label: string, data: any[], backgroundColor?: string[], minBarLength: number }[]
 }
 
@@ -36,19 +38,24 @@ export class GroupedTimelineMapper extends DataSetMapper {
         // Getting unique labels
         const labels = this.data.map(e => e.label).filter((v, i, a) => a.indexOf(v) === i)
 
+        const colorBy = (entry: DataSetEntry) => { return entry.color || entry.label }
+        const colorDims = this.data.map(e => colorBy(e)).filter((v, i, a) => a.indexOf(v) === i)
+
         const colors = {}
-        for (var i = 0; i < labels.length; ++i) {
-            colors[labels[i]] = this.colors[i % this.colors.length]
+        for (var i = 0; i < colorDims.length; ++i) {
+            colors[colorDims[i]] = this.colors[i % this.colors.length]
         }
+
+        const legends = Object.keys(colors).map(key => { return { label: key, color: colors[key] } })
 
         const dataSets = [{
             label: '',
             data: this.data.map(e => { return { x: [e.start, e.end], y: e.label, tooltip: e.tooltip } }),
-            backgroundColor: this.data.map(e => colors[e.label]),
+            backgroundColor: this.data.map(e => colors[colorBy(e)]),
             minBarLength: 2
         }]
 
-        return { labels: labels, dataSets: dataSets }
+        return { labels: labels, dataSets: dataSets, legends: legends }
     }
 }
 
@@ -57,18 +64,23 @@ export class GanttTimelineMapper extends DataSetMapper {
         // Getting unique labels
         const labels = this.data.map(e => e.label).filter((v, i, a) => a.indexOf(v) === i)
 
+        const colorBy = (entry: DataSetEntry) => { return entry.color || entry.label }
+        const colorDims = this.data.map(e => colorBy(e)).filter((v, i, a) => a.indexOf(v) === i)
+
         const colors = {}
-        for (var i = 0; i < labels.length; ++i) {
-            colors[labels[i]] = this.colors[i % this.colors.length]
+        for (var i = 0; i < colorDims.length; ++i) {
+            colors[colorDims[i]] = this.colors[i % this.colors.length]
         }
+
+        const legends = Object.keys(colors).map(key => { return { label: key, color: colors[key] } })
 
         const dataSets = [{
             label: '',
             data: this.data.map(e => { return { x: [e.start, e.end], y: e.label, tooltip: e.tooltip } }),
-            backgroundColor: this.data.map(e => colors[e.label]),
+            backgroundColor: this.data.map(e => colors[colorBy(e)]),
             minBarLength: 2
         }]
 
-        return { labels: this.data.map(e => e.label), dataSets: dataSets }
+        return { labels: this.data.map(e => e.label), dataSets: dataSets, legends: legends }
     }
 }

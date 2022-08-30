@@ -43,6 +43,9 @@ ChartJS.register(
 )
 
 const Timeline = ({ context, prompts, data, drillDown }: Props) => {
+
+  console.log(context)
+  console.log(data)
   
   const pallete = context.app.color_palette
   const settings = context.component.settings
@@ -54,12 +57,24 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
 
   // Mapping the query response to a more usable state 
   const raw: DataSetEntry[] = data.data.map(entry => {
-    return {
+    const mapped: DataSetEntry = {
       start: new Date(entry[0].value).getTime(),
       end: new Date(entry[1].value).getTime(),
       label: entry[2].value,
-      tooltip: entry.length > 3 ? entry.slice(3).map(e => e.value) : [`${entry[0].formatted} → ${entry[1].formatted}`]
+      tooltip: [`${entry[0].formatted} → ${entry[1].formatted}`]
     }
+
+    const bindings = context.component.bindings || {}
+
+    // Optional color tray
+    if (bindings['tray-color'].length > 0) { mapped.color = entry[3].value }
+
+    //Optional tooltip tray
+    if (bindings['tray-tooltip'].length > 0) {
+      mapped.tooltip?.push(...entry.slice(3 + bindings['tray-color'].length).map(e => e.value))
+    }
+
+    return mapped;
   })
   .filter(o => o.start < o.end) //Remove weird cases where start > end
   .sort((a, b) => a.start - b.start) //Ensure chronological order by sorting on start
@@ -85,10 +100,6 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
     year: settings?.format
   }
 
-  const timeAxisOptions = {
-    unit: settings?.unit === "default" ? false : settings?.unit
-  }
-
   const chartOptions = {
     indexAxis: 'y' as const,
     scales: {
@@ -106,7 +117,14 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
       }
     },
     plugins: {
-      legend: { display: false },
+      legend: { 
+        display: true,
+        labels: {
+          generateLabels() {
+            return mappedSet.legends.map(l => { return { text: l.label, fillStyle: l.color , strokeStyle: l.color }})
+          } 
+        }
+      },
       tooltip: {
         displayColors: false,
         callbacks: {

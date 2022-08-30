@@ -1,7 +1,7 @@
 {
   "icon": "./assets/icon.svg",
   "name": "Timeline",
-  "hint": "Drag any 2 time based fields to the Start/End trays and a field marking them to the label tray then enjoy visualizing your data on the timeline as floating bars",
+  "hint": "Place 1 time based column in Start, 1 time based column in End and 1 column in Category",
   "options": {
     "individualFilter": true
   },
@@ -78,9 +78,15 @@
     },
     {
       "key": "tray-label",
-      "name": "Label",
+      "name": "Category",
       "queryRole": "measure",
       "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "key": "tray-color",
+      "name": "Color By",
+      "queryRole": "measure",
       "maxCount": 1
     },
     {
