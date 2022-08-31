@@ -69,7 +69,11 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
 
     //Optional tooltip tray
     if (bindings['tray-tooltip']?.length > 0) {
-      mapped.tooltip?.push(...entry.slice(3 + bindings['tray-color']?.length).map(e => e.value))
+      for (var i = 3 + bindings['tray-color']?.length; i < data.measureHeaders.length; ++i) {
+        var tooltip = entry[i].value
+        if (data.measureHeaders[i].label) { tooltip = `${data.measureHeaders[i].label}: ${tooltip}` }
+        mapped.tooltip?.push(tooltip)
+      }
     }
 
     return mapped;
@@ -123,7 +127,8 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
     },
     plugins: {
       legend: { 
-        display: true,
+        display: settings?.legendEnabled,
+        position: settings?.legendPosition,
         labels: {
           generateLabels() {
             return mappedSet.legends.map(l => { return { text: l.label, fillStyle: l.color , strokeStyle: l.color }})

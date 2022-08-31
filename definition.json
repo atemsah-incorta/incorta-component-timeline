@@ -43,6 +43,29 @@
           "type": "text"
         }
       ]
+    },
+    {
+      "name": "Legend",
+      "settings": [
+        {
+          "name": "Enabled",
+          "key": "legendEnabled",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "Position",
+          "key": "legendPosition",
+          "type": "dropdown",
+          "defaultValue": "top",
+          "options": [
+            { "key": "top", "label": "Top" },
+            { "key": "bottom", "label": "Bottom" },
+            { "key": "left", "label": "Left" },
+            { "key": "right", "label": "Right" }
+          ]
+        }
+      ]
     }
   ],
   "bindingsTrays": [
