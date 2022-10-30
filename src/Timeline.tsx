@@ -138,7 +138,7 @@ const Timeline = ({ context, prompts, data, drillDown }: Props) => {
       tooltip: {
         displayColors: false,
         callbacks: {
-          label: (ctx: any): string => { return ctx.raw.tooltip }
+          label: (ctx: any): string[] => { return ctx.raw.tooltip }
         }
       }
     },
